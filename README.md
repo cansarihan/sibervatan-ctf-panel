@@ -9,7 +9,7 @@ Giriş ekranından itibaren kullanıcılar terminal tabanlı bir deneyimle karş
 
 | Giriş Ekranı | Görev Paneli (Dashboard) |
 | :---: | :---: |
-| ![Login](ekran_goruntuleri/1-login.png) | ![Dashboard](ekran_goruntuleri/2-dashboard.jpg) |
+| ![Login](ekran_goruntuleri/1-login.png) | ![Dashboard](ekran_goruntuleri/2-dashboard.png) |
 
 | Skor Tablosu (Leaderboard) | Kullanıcı Profil Detayı |
 | :---: | :---: |
@@ -22,7 +22,7 @@ Yöneticiler, platformu tamamen dinamik bir şekilde kontrol edebilir.
 
 | Admin İstatistikleri | Yeni Görev Ekleme |
 | :---: | :---: |
-| ![Admin Dash](ekran_goruntuleri/5-admin-dashboard.jpg) | ![Add Challenge](ekran_goruntuleri/6-admin-add.png) |
+| ![Admin Dash](ekran_goruntuleri/5-admin-dashboard.png) | ![Add Challenge](ekran_goruntuleri/6-admin-add.png) |
 
 | Görev Düzenleme ve IP Yönetimi | Kullanıcı Yönetimi |
 | :---: | :---: |
