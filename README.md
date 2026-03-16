@@ -50,3 +50,4 @@ Yöneticiler, platformu tamamen dinamik bir şekilde kontrol edebilir.
 ### 1. Hazırlık
 ```bash
 npm install# sibervatan-ctf-panel
+# sibervatan-ctf-panel
