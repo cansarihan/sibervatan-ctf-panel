@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SiberVatan CTF - Profil: <%= targetUser.username %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+</head>
+<body>
+    <div class="container" style="max-width: 600px; margin-top: 50px;">
+        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary-color); padding-bottom: 15px;">
+            <h1 style="margin: 0;">Ajan Profili: <span style="color: white;"><%= targetUser.username %></span></h1>
+            <a href="/leaderboard">[ Geri Dön ]</a>
+        </header>
+
+        <div class="card" style="margin-top: 20px; text-align: center;">
+            <h2 style="color: var(--primary-color); font-size: 3em; margin: 10px 0;"><%= targetUser.score %></h2>
+            <p style="color: #888;">Toplam Puan</p>
+        </div>
+
+        <h3 style="margin-top: 40px;">Çözdüğü Görevler (<%= solvedChallenges.length %>)</h3>
+        
+        <% if(solvedChallenges.length === 0) { %>
+            <p style="color: #888;">Bu ajan henüz bir görev tamamlamadı.</p>
+        <% } else { %>
+            <ul style="list-style-type: none; padding: 0;">
+                <% solvedChallenges.forEach(c => { %>
+                    <li style="background-color: var(--secondary-bg); padding: 15px; margin-bottom: 10px; border: 1px solid var(--border-color); border-radius: 5px; display: flex; justify-content: space-between;">
+                        <span><b>#<%= c.id %></b> - <%= c.title %></span>
+                        <span style="color: var(--primary-color);">+<%= c.points %> Puan</span>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+
+        <footer style="text-align: center; margin-top: 50px; padding: 20px 0; border-top: 1px solid var(--border-color); color: #888; font-size: 0.9em;">
+            <p>&lt;/&gt; Can Sarıhan tarafından kodlanmıştır.</p>
+        </footer>
+    </div>
+</body>
+</html>

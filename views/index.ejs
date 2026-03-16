@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SiberVatan CTF - Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+</head>
+<body>
+    <div class="container">
+        <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/img/sibervatan_renkli-yatay.png" alt="SiberVatan Logo" style="height: 50px; width: auto;">
+                <h1 style="margin: 0;">SiberVatan CTF</h1>
+            </div>
+            <div>
+                <span>Ajan: <b><%= user.username %></b></span> | 
+                <span>Puan: <b><%= user.score %></b></span> | 
+                <a href="/leaderboard">[ Liderlik Tablosu ]</a> | 
+                
+               <% if (user.isAdmin) { %>
+    <a href="/admin" style="color: #ffa500; font-weight: bold;">[ Admin Panel ]</a> | 
+<% } %>
+                
+                <a href="/logout" style="color: #ff4d4d; font-weight: bold;">[ Çıkış Yap ]</a>
+            </div>
+        </header>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div style="background-color: #8b0000; border: 1px solid #ff0000; color: #fff; padding: 15px; margin-bottom: 20px; border-radius: 5px; font-weight: bold; text-align: center;"><%= error %></div>
+        <% } %>
+        <% if (typeof success !== 'undefined' && success) { %>
+            <div style="background-color: #004d00; border: 1px solid #00ff00; color: #fff; padding: 15px; margin-bottom: 20px; border-radius: 5px; font-weight: bold; text-align: center;"><%= success %></div>
+        <% } %>
+
+        <% 
+            const total = challenges.length;
+            const solvedCount = user.solved.length;
+            const progress = total === 0 ? 0 : Math.round((solvedCount / total) * 100);
+        %>
+
+        <h3>İlerleme Durumu (%<%= progress %>)</h3>
+        <div class="progress-container">
+            <div class="progress-bar" style="width: <%= progress %>%;"><%= solvedCount %> / <%= total %></div>
+        </div>
+
+        <% 
+            const categories = [
+                { title: "🟢 Kolay Görevler (Keşif ve Temel Linux)", min: 0, max: 49, color: "#00ff00", icon: "🟢", diffText: "Kolay" },
+                { title: "🟠 Orta Seviye Görevler (Sistem ve Yetki)", min: 50, max: 99, color: "#ffa500", icon: "🟠", diffText: "Orta" },
+                { title: "🔴 Zor Görevler (Sömürü ve İleri Düzey)", min: 100, max: 9999, color: "#ff0000", icon: "🔴", diffText: "Zor" }
+            ];
+        %>
+
+        <% categories.forEach(cat => { %>
+            <h2 style="border-bottom: 2px solid <%= cat.color %>; padding-bottom: 5px; margin-top: 40px; color: <%= cat.color %>;">
+                <%= cat.title %>
+            </h2>
+            
+            <div class="grid" style="margin-bottom: 20px;">
+                <% 
+                    const catChallenges = challenges.filter(c => c.points >= cat.min && c.points <= cat.max).sort((a,b) => a.points - b.points);
+                    if(catChallenges.length === 0) { 
+                %>
+                    <p style="color: #888;">Bu kategoride henüz aktif görev bulunmuyor.</p>
+                <% } else { %>
+                    <% catChallenges.forEach(challenge => { %>
+                        <% const isSolved = user.solved.includes(challenge.id.toString()) || user.solved.includes(challenge.id); %>
+                        <div class="card <%= isSolved ? 'solved' : '' %>">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <h3 style="margin: 0 0 10px 0;">#<%= challenge.id %> - <%= challenge.title %></h3>
+                                
+                                <span class="difficulty-badge" style="border: 1px solid <%= cat.color %>; color: <%= cat.color %>; padding: 3px 8px; border-radius: 12px; font-size: 0.75em; font-weight: bold; white-space: nowrap;">
+                                    <%= cat.icon %> <%= cat.diffText %>
+                                </span>
+                            </div>
+                            
+                            <p style="margin-top: 5px;">Ödül: <%= challenge.points %> Puan</p>
+                            
+                            <% if(isSolved) { %>
+                                <p class="pwned-text" style="color: var(--primary-color);"><b>[✓] Pwned! (Çözüldü)</b></p>
+                            <% } else { %>
+                                <p style="color: var(--primary-color); font-weight: bold; font-size: 0.85em; margin-bottom: 10px; border-left: 2px solid var(--primary-color); padding-left: 10px;">
+                                    Hedef Makine: <%= challenge.ip || '10.10.74.25' %>
+                                </p>
+
+                                <details style="margin-bottom: 15px; cursor: pointer; color: #888;">
+                                    <summary>[?] İpucu Al</summary>
+                                    <p style="margin-top: 5px; color: var(--text-color); font-size: 0.9em; background: #222; padding: 10px; border-left: 3px solid var(--primary-color);">
+                                        <%= challenge.hint %>
+                                    </p>
+                                </details>
+
+                                <form action="/submit-flag" method="POST">
+                                    <input type="hidden" name="challengeId" value="<%= challenge.id %>">
+                                    <input type="text" name="flag" placeholder="Format: {sibervatan:flag_buraya}" required autocomplete="off">
+                                    <button type="submit">Flag Gönder</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    <% }); %>
+                <% } %>
+            </div>
+        <% }); %>
+
+        <footer style="text-align: center; margin-top: 50px; padding: 20px 0; border-top: 1px solid var(--border-color); color: #888; font-size: 0.9em;">
+            <p>&lt;/&gt; Can Sarıhan tarafından kodlanmıştır.</p>
+        </footer>
+    </div>
+</body>
+</html>

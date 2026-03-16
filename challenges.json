@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1, "title": "Keşif: SiberVatan Altyapısı (Easy)", "points": 10, "flag": "{sibervatan:recon_success}", "ip": "10.10.74.25",
+    "hint": "Hedef IP'yi nmap ile derinlemesine tarayın. Dışarıya açık olmayan bir web portu (8080, 8888 vb.) keşfedebilirseniz grubun dijital kapısını aralamış olursunuz."
+  },
+  {
+    "id": 2, "title": "Bilgi İfşası: robots.txt (Easy)", "points": 10, "flag": "{sibervatan:robots_txt_leak}", "ip": "10.10.74.25",
+    "hint": "Sitenin kök dizininde robots.txt dosyasını arayın, gizli kalması gereken bir 'admin' veya 'backup' dizini mi var?"
+  },
+  {
+    "id": 3, "title": "Zayıf Kimlik Doğrulama (Easy)", "points": 20, "flag": "{sibervatan:default_admin_pass}", "ip": "10.10.74.25",
+    "hint": "'admin:admin' veya 'guest:guest' gibi varsayılan kimlik bilgilerini deneyerek içeri sızmayı deneyin."
+  },
+  {
+    "id": 4, "title": "Dizin Gezintisi (Easy)", "points": 20, "flag": "{sibervatan:ls_hidden_files}", "ip": "10.10.74.25",
+    "hint": "Linux'ta nokta (.) ile başlayan dosyalar her zaman şüphelidir. 'ls -a' komutunu kullanarak görünmeyen dosyaları bulun."
+  },
+  {
+    "id": 5, "title": "History Analizi (Easy)", "points": 30, "flag": "{sibervatan:history_revealed}", "ip": "10.10.74.25",
+    "hint": "Terminalde daha önce hangi komutların kullanıldığını görmek için '.bash_history' dosyasına veya 'history' komutuna göz atın."
+  },
+  {
+    "id": 6, "title": "Yapılandırma Hatası: Yedekler (Easy)", "points": 30, "flag": "{sibervatan:config_backup_leak}", "ip": "10.10.74.25",
+    "hint": "/etc veya /var/www dizinlerinde '.old' veya '.bak' uzantılı yedek dosyalarını arayın."
+  },
+  {
+    "id": 7, "title": "Fidye Yazılımı Analizi (Medium)", "points": 50, "flag": "{sibervatan:ftp_anonymous_entry}", "ip": "10.10.74.26",
+    "hint": "FTP servisinde 'anonymous' kullanıcı girişi aktif mi? Aktifse fidye yazılımı anahtarlarını burada bulabilirsiniz."
+  },
+  {
+    "id": 8, "title": "LFI: Sistem Sızıntısı (Medium)", "points": 50, "flag": "{sibervatan:etc_passwd_read}", "ip": "10.10.74.26",
+    "hint": "'/view?file=' gibi parametreleri kullanarak /etc/passwd dosyasını okumayı deneyin."
+  },
+  {
+    "id": 9, "title": "Log Analizi (Medium)", "points": 60, "flag": "{sibervatan:log_auth_failed}", "ip": "10.10.74.26",
+    "hint": "'/var/log/auth.log' gibi dosyalarda gizlenmiş bir flag olabilir mi?"
+  },
+  {
+    "id": 10, "title": "Zayıf Servis: SSH (Medium)", "points": 60, "flag": "{sibervatan:ssh_pvt_key_found}", "ip": "10.10.74.26",
+    "hint": "Bir kullanıcının '.ssh' klasöründeki 'id_rsa' dosyası (Private Key) ile şifresiz bağlanmayı deneyin."
+  },
+  {
+    "id": 11, "title": "Cron Job Manipülasyonu (Medium)", "points": 70, "flag": "{sibervatan:cron_priv_esc}", "ip": "10.10.74.26",
+    "hint": "Sistemde her dakika çalışan otomatik bir scriptin içine kendi komutunuzu ekleyerek yetki yükseltmeyi deneyin."
+  },
+  {
+    "id": 12, "title": "Grep Master (Medium)", "points": 70, "flag": "{sibervatan:grep_search_win}", "ip": "10.10.74.26",
+    "hint": "'grep' komutunu kullanarak dosyalarda 'sibervatan' veya 'flag' kelimelerini süzün."
+  },
+  {
+    "id": 13, "title": "Kritik Sızıntı: Base64 (Medium)", "points": 80, "flag": "{sibervatan:base64_decoded}", "ip": "10.10.74.26",
+    "hint": "Karşılaştığınız karmaşık veriyi 'base64 -d' komutuyla çözerek anlamlı hale getirin."
+  },
+  {
+    "id": 14, "title": "Nmap: Versiyon Analizi (Hard)", "points": 100, "flag": "{sibervatan:vulnerability_scan_sV}", "ip": "10.10.74.27",
+    "hint": "'nmap -sV' ile servislerin tam versiyonlarını öğrenin ve güncel olmayan servisleri bulun."
+  },
+  {
+    "id": 15, "title": "Metasploit: Exploit Zamanı (Hard)", "points": 120, "flag": "{sibervatan:metasploit_rce_win}", "ip": "10.10.74.27",
+    "hint": "Belirlediğiniz servis versiyonu için Metasploit kullanarak uzaktan kod çalıştırma (RCE) saldırısı yapın."
+  },
+  {
+    "id": 16, "title": "SUID: Yetki Yükseltme (Hard)", "points": 150, "flag": "{sibervatan:suid_bit_exploit}", "ip": "10.10.74.27",
+    "hint": "'find / -perm -4000' komutuyla root yetkisine sahip zayıf dosyaları arayın."
+  },
+  {
+    "id": 17, "title": "Ağ Dinleme: Tcpdump (Hard)", "points": 180, "flag": "{sibervatan:sniffing_traffic}", "ip": "10.10.74.27",
+    "hint": "Ağ trafiğini 'tcpdump' ile dinleyerek giden paketlerin içindeki gizli flagleri yakalayın."
+  },
+  {
+    "id": 18, "title": "Kernel Exploitation (Hard)", "points": 200, "flag": "{sibervatan:kernel_panic_root}", "ip": "10.10.74.27",
+    "hint": "'uname -a' ile kernel sürümünü öğrenin ve bilinen bir yetki yükseltme açığı araştırın."
+  },
+  {
+    "id": 19, "title": "Capabilities: Gizli Yetkiler (Hard)", "points": 220, "flag": "{sibervatan:cap_hunter_expert}", "ip": "10.10.74.27",
+    "hint": "'getcap -r /' komutuyla root yetkileriyle donatılmış binary dosyalarını kontrol edin."
+  },
+  {
+    "id": 20, "title": "Final: Root Erişimi (Hard)", "points": 300, "flag": "{sibervatan:operation_complete_hero}", "ip": "10.10.74.27",
+    "hint": "Root olduktan sonra '/root' dizinindeki son flag dosyasını okuyarak operasyonu bitirin."
+  }
+]

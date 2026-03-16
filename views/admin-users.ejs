@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SiberVatan CTF - Kullanıcı Yönetimi</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <style>
+        .admin-section { background-color: #161b22; padding: 25px; margin-bottom: 30px; border: 1px solid #30363d; border-radius: 8px; }
+        .admin-nav { display: flex; gap: 15px; margin-bottom: 30px; background: #0d1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }
+        .admin-nav a { color: #c9d1d9; text-decoration: none; font-weight: bold; padding: 10px 20px; border-radius: 5px; transition: 0.3s; }
+        .admin-nav a:hover, .admin-nav a.active { background-color: #ffa500; color: #000; }
+        .admin-table th { background-color: #21262d; padding: 12px; } .admin-table td { padding: 12px; }
+        .btn-danger { background-color: #ff4d4d; color: white; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px; animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ffa500; padding-bottom: 15px; margin-bottom: 20px;">
+            <h1 style="color: #ffa500; margin: 0;">⚙️ CTF Yönetim Merkezi</h1><a href="/">[ Ana Siteye Dön ]</a>
+        </header>
+
+        <div class="admin-nav">
+            <a href="/admin">📊 İstatistikler</a>
+            <a href="/admin/challenges">🚩 Görev Yönetimi</a>
+            <a href="/admin/users" class="active">👥 Kullanıcı Yönetimi</a>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %><div style="background-color: #8b0000; border: 1px solid #ff0000; color: #fff; padding: 15px; margin-bottom: 25px; border-radius: 5px; text-align: center;"><%= error %></div><% } %>
+        <% if (typeof success !== 'undefined' && success) { %><div style="background-color: #004d00; border: 1px solid #00ff00; color: #fff; padding: 15px; margin-bottom: 25px; border-radius: 5px; text-align: center;"><%= success %></div><% } %>
+
+        <div class="admin-section" style="border-left: 4px solid #ff4d4d;">
+            <h2 style="color: #ff4d4d; margin-top: 0;">👥 Sistemdeki Ajanlar</h2>
+            <table class="admin-table" style="width: 100%; text-align: left; border-collapse: collapse;">
+                <thead><tr style="border-bottom: 1px solid #444;"><th>Kullanıcı Adı</th><th>Çözdüğü Soru</th><th>Puan</th><th style="text-align: right;">İşlem</th></tr></thead>
+                <tbody>
+                    <% users.forEach(u => { %>
+                        <tr style="border-bottom: 1px solid #30363d;">
+                            <td style="font-weight: bold;"><%= u.username %></td><td><%= u.solved ? u.solved.length : 0 %></td><td style="color: #00ff00;"><%= u.score %></td>
+                            <td style="text-align: right;">
+                                <% if(u.username !== 'admin' && u.username !== 'cansarihan') { %>
+                                    <form action="/admin/user/delete" method="POST" style="margin: 0;" onsubmit="return confirm('Silmek istediğine emin misin?');"><input type="hidden" name="username" value="<%= u.username %>"><button type="submit" class="btn-danger">🗑️ Sil</button></form>
+                                <% } else { %><span style="color: #888; font-size: 0.85em;">Kurucu (Silinemez)</span><% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

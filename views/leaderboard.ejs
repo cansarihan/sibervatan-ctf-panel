@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SiberVatan CTF - Leaderboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+</head>
+<body>
+    <div class="container" style="padding-top: 20px;">
+        <header style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="/img/sibervatan_renkli-yatay.png" alt="SiberVatan Logo" style="height: 50px; width: auto;">
+                <h1 style="margin: 0;">Skor Tablosu</h1>
+            </div>
+            <a href="/">[ Ana Ekrana Dön ]</a>
+        </header>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Sıra</th>
+                    <th>Ajan (Kullanıcı)</th>
+                    <th>Çözülen Soru</th>
+                    <th>Toplam Puan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach((u, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><a href="/user/<%= u.username %>" style="color: var(--text-color); text-decoration: underline;"><%= u.username %></a></td>
+                        <td><%= u.solved ? u.solved.length : 0 %></td>
+                        <td style="color: var(--primary-color); font-weight: bold;"><%= u.score %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        
+        <footer style="text-align: center; margin-top: 50px; padding: 20px 0; border-top: 1px solid var(--border-color); color: #888; font-size: 0.9em;">
+            <p>&lt;/&gt; Can Sarıhan tarafından kodlanmıştır.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+:root {
+    --bg-color: #0d1117;
+    --text-color: #c9d1d9;
+    --primary-color: #00ff00;
+    --secondary-bg: #161b22;
+    --border-color: #30363d;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h1, h2, h3 { color: var(--primary-color); }
+a { color: var(--primary-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Form Elements */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--primary-color);
+    box-sizing: border-box;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+button:hover { background-color: #00cc00; }
+
+/* Grid and Cards */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.solved { border-color: var(--primary-color); opacity: 0.7; }
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--primary-color);
+    text-align: center;
+    line-height: 20px;
+    color: var(--bg-color);
+    font-weight: bold;
+}
+/* Logo Ayarları */
+.logo-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    max-width: 250px; /* Logonun büyüklüğünü buradan ayarlayabilirsin */
+    height: auto;
+}
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+/* --- SİBER VATAN ANİMASYONLARI --- */
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Konteyner ve Kartlara Animasyon Uygulama */
+.container {
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.card, .admin-section {
+    opacity: 0; /* Başlangıçta görünmez yap */
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+/* ==========================================================================
+   CTF GÖREV KARTLARI (CARD) İÇİN PROFESYONEL HOVER ANİMASYONLARI
+   ========================================================================== */
+
+.card {
+    /* Kartların normal haline yumuşak bir geçiş (transition) ekliyoruz */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    position: relative;
+    overflow: hidden; /* Işık efektinin kart dışına taşmasını engeller */
+}
+
+/* Kartın Üzerine Gelindiğinde (Hover) Olacaklar */
+.card:hover {
+    transform: translateY(-8px); /* Kartı hafifçe havaya kaldırır (Büyüme/Kalkma hissi) */
+    box-shadow: 0 12px 25px rgba(255, 165, 0, 0.25); /* Arkaya turuncu bir gölge/parlama verir */
+    border-color: #ffa500; /* Çerçeveyi belirginleştirir */
+}
+
+/* Eğer Görev Çözüldüyse (Solved) Üzerine Gelindiğinde Yeşil Parlasın */
+.card.solved:hover {
+    box-shadow: 0 12px 25px rgba(0, 255, 0, 0.2); /* Yeşil gölge */
+    border-color: #00ff00; /* Yeşil çerçeve */
+}
+
+/* --- PREMIUM DETAY: Üzerinden Geçen Işık Efekti (Shine) --- */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: -100%; /* Başlangıçta kartın solunda, görünmez konumda */
+    width: 50%; 
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transform: skewX(-25deg); /* Işığı eğik hale getirir */
+    transition: 0.6s ease;
+    pointer-events: none; /* Tıklamaları engellemesin diye */
+}
+
+/* ==========================================================================
+   CANLI SİSTEM (BREATHING & GLOW) ANİMASYONLARI
+   ========================================================================== */
+
+/* Zorluk Dereceleri İçin Nefes Alan Parlama */
+.difficulty-badge {
+    display: inline-block;
+    animation: neonPulse 1.5s infinite alternate ease-in-out;
+    background-color: rgba(0, 0, 0, 0.4); /* Rengin daha iyi parlaması için hafif koyu arka plan */
+}
+
+@keyframes neonPulse {
+    0% {
+        box-shadow: 0 0 2px currentColor;
+        opacity: 0.8;
+    }
+    100% {
+        box-shadow: 0 0 12px currentColor;
+        opacity: 1;
+        transform: scale(1.05); /* Parlarken çok hafif büyür */
+    }
+}
+
+/* Çözülen Sorular İçin Terminal Yanıp Sönmesi */
+.pwned-text {
+    animation: terminalBlink 2s infinite;
+}
+
+@keyframes terminalBlink {
+    0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--primary-color); }
+    50% { opacity: 0.6; text-shadow: none; }
+}
+.card:hover::before {
+    left: 125%; /* Fare üzerine gelince ışık soldan sağa doğru hızla kayar */
+}
+/* Butonlara Hover (Üstüne Gelme) Efekti */
+button, .btn {
+    transition: all 0.3s ease;
+}
+button:hover, .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.3);
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th { color: var(--primary-color); }

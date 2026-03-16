@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SiberVatan CTF - Görev Yönetimi</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <style>
+        .admin-section { background-color: #161b22; padding: 25px; margin-bottom: 30px; border: 1px solid #30363d; border-radius: 8px; }
+        .admin-nav { display: flex; gap: 15px; margin-bottom: 30px; background: #0d1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }
+        .admin-nav a { color: #c9d1d9; text-decoration: none; font-weight: bold; padding: 10px 20px; border-radius: 5px; transition: 0.3s; }
+        .admin-nav a:hover, .admin-nav a.active { background-color: #ffa500; color: #000; }
+        .btn { padding: 10px 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; color: #0d1117; }
+        .btn-success { background-color: #00ff00; } .btn-primary { background-color: #ffa500; } .btn-danger { background-color: #ff4d4d; color: white; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; } .form-col { display: flex; flex-direction: column; flex: 1; }
+        .form-col.small { flex: 0.3; } .form-col.large { flex: 2; }
+        .form-col label { color: #888; font-size: 0.9em; margin-bottom: 6px; }
+        .edit-input { width: 100%; height: 42px; background-color: #0d1117; border: 1px solid #30363d; color: #c9d1d9; padding: 10px; box-sizing: border-box; border-radius: 4px; font-family: monospace; }
+        .edit-input:focus { outline: none; border-color: #ffa500; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px; animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ffa500; padding-bottom: 15px; margin-bottom: 20px;">
+            <h1 style="color: #ffa500; margin: 0;">⚙️ CTF Yönetim Merkezi</h1><a href="/">[ Ana Siteye Dön ]</a>
+        </header>
+
+        <div class="admin-nav">
+            <a href="/admin">📊 İstatistikler</a>
+            <a href="/admin/challenges" class="active">🚩 Görev Yönetimi</a>
+            <a href="/admin/users">👥 Kullanıcı Yönetimi</a>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %><div style="background-color: #8b0000; border: 1px solid #ff0000; color: #fff; padding: 15px; margin-bottom: 25px; border-radius: 5px; text-align: center;"><%= error %></div><% } %>
+        <% if (typeof success !== 'undefined' && success) { %><div style="background-color: #004d00; border: 1px solid #00ff00; color: #fff; padding: 15px; margin-bottom: 25px; border-radius: 5px; text-align: center;"><%= success %></div><% } %>
+
+        <div class="admin-section" style="border-left: 4px solid #00ff00;">
+            <h2 style="color: #00ff00; margin-top: 0;">➕ Yeni Görev Ekle</h2>
+            <form action="/admin/challenge/add" method="POST">
+                <div class="form-row">
+                    <div class="form-col small"><label>ID</label><input type="number" name="id" class="edit-input" required></div>
+                    <div class="form-col large"><label>Soru Başlığı</label><input type="text" name="title" class="edit-input" required autocomplete="off"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col small"><label>Puan</label><input type="number" name="points" class="edit-input" required></div>
+                    <div class="form-col large"><label>Hedef IP</label><input type="text" name="ip" class="edit-input" value="10.10.74.25" required></div>
+                </div>
+                <div class="form-row"><div class="form-col"><label>Flag</label><input type="text" name="flag" class="edit-input" required></div></div>
+                <div class="form-row" style="margin-bottom: 20px;"><div class="form-col"><label>İpucu Metni</label><input type="text" name="hint" class="edit-input" required></div></div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">💾 Yeni Görevi Kaydet</button>
+            </form>
+        </div>
+
+        <div class="admin-section" style="border-left: 4px solid #ffa500;">
+            <h2 style="color: #ffa500; margin-top: 0;">📝 Mevcut Görevleri Düzenle</h2>
+            <% challenges.sort((a,b) => a.id - b.id).forEach(c => { %>
+                <form action="/admin/challenge/edit" method="POST" style="background-color: #0d1117; padding: 25px; border-radius: 8px; border: 1px solid #30363d; margin-bottom: 20px;">
+                    <input type="hidden" name="id" value="<%= c.id %>">
+                    <div class="form-row">
+                        <div class="form-col small"><label>ID</label><input type="text" class="edit-input" value="#<%= c.id %>" disabled style="background:#111;"></div>
+                        <div class="form-col large"><label>Başlık</label><input type="text" name="title" class="edit-input" value="<%= c.title %>" required></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col small"><label>Puan</label><input type="number" name="points" class="edit-input" value="<%= c.points %>" required></div>
+                        <div class="form-col large"><label>Hedef IP</label><input type="text" name="ip" class="edit-input" value="<%= c.ip || '10.10.74.25' %>" required></div>
+                    </div>
+                    <div class="form-row"><div class="form-col"><label>Flag</label><input type="text" name="flag" class="edit-input" value="<%= c.flag %>" required></div></div>
+                    <div class="form-row" style="margin-bottom: 20px;"><div class="form-col"><label>İpucu Metni</label><input type="text" name="hint" class="edit-input" value="<%= c.hint %>" required></div></div>
+                    <div style="display: flex; gap: 15px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 4;">✏️ Kaydet</button>
+                        <button type="submit" formaction="/admin/challenge/delete" class="btn btn-danger" style="flex: 1;" onclick="return confirm('Emin misin?');">🗑️ Sil</button>
+                    </div>
+                </form>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>

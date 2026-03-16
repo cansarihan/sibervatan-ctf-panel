@@ -1,0 +1,13 @@
+# Bağımlılıklar (Npm paketleri - Çok yer kaplar, yüklenmez)
+node_modules/
+
+# Log dosyaları ve Hata kayıtları
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# MacOS Sistem Dosyaları (Sen MacBook kullandığın için önemli)
+.DS_Store
+
+# Geçici dosyalar ve Session verileri
+.env

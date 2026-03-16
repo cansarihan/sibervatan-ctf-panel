@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SiberVatan CTF - Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+    <style>
+        .stat-card { background-color: #161b22; padding: 30px; border: 1px solid #30363d; border-radius: 8px; text-align: center; flex: 1; }
+        .stat-card h2 { font-size: 3em; margin: 10px 0; color: #ffa500; }
+        .admin-nav { display: flex; gap: 15px; margin-bottom: 30px; background: #0d1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }
+        .admin-nav a { color: #c9d1d9; text-decoration: none; font-weight: bold; padding: 10px 20px; border-radius: 5px; transition: 0.3s; }
+        .admin-nav a:hover, .admin-nav a.active { background-color: #ffa500; color: #000; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1000px; animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+        <header style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ffa500; padding-bottom: 15px; margin-bottom: 20px;">
+            <h1 style="color: #ffa500; margin: 0;">⚙️ CTF Yönetim Merkezi</h1>
+            <a href="/">[ Ana Siteye Dön ]</a>
+        </header>
+
+        <div class="admin-nav">
+            <a href="/admin" class="active">📊 İstatistikler</a>
+            <a href="/admin/challenges">🚩 Görev Yönetimi</a>
+            <a href="/admin/users">👥 Kullanıcı Yönetimi</a>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %><div style="background-color: #8b0000; border: 1px solid #ff0000; color: #fff; padding: 15px; margin-bottom: 25px; border-radius: 5px; text-align: center;"><%= error %></div><% } %>
+        <% if (typeof success !== 'undefined' && success) { %><div style="background-color: #004d00; border: 1px solid #00ff00; color: #fff; padding: 15px; margin-bottom: 25px; border-radius: 5px; text-align: center;"><%= success %></div><% } %>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;">
+            <div class="stat-card" style="border-bottom: 4px solid #00ff00;">
+                <p style="color: #888; font-size: 1.2em; margin: 0;">👥 Toplam Ajan (Kullanıcı)</p>
+                <h2 style="color: #00ff00;"><%= totalUsers %></h2>
+            </div>
+            <div class="stat-card" style="border-bottom: 4px solid #ffa500;">
+                <p style="color: #888; font-size: 1.2em; margin: 0;">🚩 Sistemdeki Görevler</p>
+                <h2 style="color: #ffa500;"><%= totalChallenges %></h2>
+            </div>
+            <div class="stat-card" style="border-bottom: 4px solid #00bfff;">
+                <p style="color: #888; font-size: 1.2em; margin: 0;">💥 Çözülen Toplam Flag</p>
+                <h2 style="color: #00bfff;"><%= totalSolvedFlags %></h2>
+            </div>
+        </div>
+
+        <div style="background-color: #161b22; padding: 30px; border: 1px solid #8b0000; border-radius: 8px; text-align: center; border-left: 4px solid #ff0000;">
+            <h2 style="color: #ff4d4d; margin-top: 0;">⚠️ Tehlikeli Bölge: Yeni Sezon Başlat</h2>
+            <p style="color: #888; margin-bottom: 20px;">Bu butona bastığınızda tüm ajanların <b>puanları ve çözdükleri görevler 0'lanır</b>. Sadece hesaplar kalır. (Bu işlem geri alınamaz!)</p>
+            <form action="/admin/reset-scores" method="POST" onsubmit="return confirm('DİKKAT! Tüm kullanıcıların skorları SIFIRLANACAK. Emin misin?');">
+                <button type="submit" style="background-color: #8b0000; color: white; padding: 15px 30px; font-size: 1.2em; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;">💥 TÜM SKORLARI SIFIRLA</button>
+            </form>
+        </div>
+
+        <footer style="text-align: center; margin-top: 50px; padding: 20px 0; border-top: 1px solid var(--border-color); color: #888; font-size: 0.9em;"><p>&lt;/&gt; Can Sarıhan tarafından kodlanmıştır.</p></footer>
+    </div>
+</body>
+</html>
