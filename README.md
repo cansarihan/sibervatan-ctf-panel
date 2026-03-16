@@ -47,7 +47,28 @@ Yöneticiler, platformu tamamen dinamik bir şekilde kontrol edebilir.
 
 ## 🛠️ Kurulum ve Çalıştırma
 
-### 1. Hazırlık
-```bash
-npm install# sibervatan-ctf-panel
-# sibervatan-ctf-panel
+## 1. Hazırlık
+Projeyi indirin
+
+npm install
+
+yazarak projeyi kurun
+
+## 2. Kullanıcı Yapılandırması
+users.json dosyasında bir admin hesabı oluşturun veya kayıt sayfasından bir hesap oluşturup isAdmin değerini true yapın.
+
+## 3. Hedef Makineleri Kurma
+İlgili .sh dosyasını hedef Ubuntu makinesine taşıyın ve çalıştırın:
+
+Bash
+chmod +x 1-kolay.sh
+sudo ./1-kolay.sh
+
+## 4. Platformu Başlatma
+Bash
+node app.js
+
+
+Kodlayan: Can Sarıhan
+(Siber Vatan Öğrencisi)
+Siber Vatan için proje amaçlı kodlanmıştır.
